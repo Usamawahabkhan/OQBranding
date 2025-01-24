@@ -1,0 +1,20 @@
+nav[role='navigation'] {
+  display: none !important;
+}
+div[class^='pageContainer_'] {
+  left: 0 !important;
+}
+
+/*
+.ms-compositeHeader {
+  display: none !important;
+} */
+
+.ms-Grid-row:first-child {
+  height: 100vh;
+  overflow: hidden;
+}
+.CanvasZone {
+  height: 100%;
+  overflow: hidden;
+}

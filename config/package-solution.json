@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "oq-main-client-side-solution",
+    "id": "a89ad786-1b44-447d-aff1-431ee6cfc4c0",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+"webApiPermissionRequests": [
+      {
+        "resource": "Microsoft.SharePoint",
+        "scope": "Lists.Read"
+      }
+    ],
+    "skipFeatureDeployment": true,
+    "features": [
+      {
+        "title": "Application Extension - Deployment of custom action.",
+        "description": "Deploys a custom action with ClientSideComponentId association",
+        "id": "88e3a1e6-afdc-4c8c-909f-a05d70e00727",
+        "version": "1.0.0.0",
+        "assets": {
+          "elementManifests": [
+            "elements.xml"
+          ]
+        }
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/oq-main.sppkg"
+  }
+}

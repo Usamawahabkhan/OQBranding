@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "initialPage": "http://win-hvbmj3otuqb/SitePages/Home.aspx",
+  "api": {
+    "port": 5432,
+    "entryPath": "node_modules/@microsoft/sp-webpart-workbench/lib/api/"
+  },
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "http://win-hvbmj3otuqb/SitePages/Home.aspx",
+      "customActions": {
+        "09ef70c1-548d-4471-82bd-2ddf056e2e6a": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "testMessage": "Testv hello message"
+          }
+        }
+      }
+    },
+    "headerAndFooter": {
+      "pageUrl": "http://win-hvbmj3otuqb/SitePages/Home.aspx",
+      "customActions": {
+        "09ef70c1-548d-4471-82bd-2ddf056e2e6a": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "testMessage": "Test hello message"
+          }
+        }
+      }
+    }
+  }
+}

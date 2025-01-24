@@ -1,0 +1,118 @@
+// src/webparts/imageSlideshow/ImageSlideshow.module.scss
+@import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
+
+.imageSlideshow {
+  position: relative;
+  max-width: auto !important;
+  margin: auto;
+
+  .slideshowContainer {
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    position: relative;
+
+    &.active {
+      display: block;
+      animation: fade 1.5s ease-in-out;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0 0 4px 0;
+  }
+
+  .caption {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .dotContainer {
+    text-align: center;
+    padding: 15px 0;
+  }
+
+  .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+
+    &:hover, &.activeDot {
+      background-color: #717171;
+    }
+  }
+
+  .playPauseBtn {
+    display: block;
+    margin: 10px auto;
+    padding: 8px 16px;
+    background-color: $ms-color-neutralLighter;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $ms-color-neutralLight;
+    }
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
