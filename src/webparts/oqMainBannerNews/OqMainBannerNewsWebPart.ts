@@ -11,12 +11,14 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
 import styles from './OqMainBannerNewsWebPart.module.scss';
 import * as strings from 'OqMainBannerNewsWebPartStrings';
+import { SPComponentLoader } from '@microsoft/sp-loader';
 
 export interface IOqMainBannerNewsWebPartProps {
   description: string;
   listName: string;
   slideInterval: number;
-  NewslistName: string;
+  newsList: string;
+  eventList:string;
 }
 
 interface ISlideItem {
@@ -32,11 +34,20 @@ export interface INewsItem {
   Caption: string;
 }
 
+export interface IEventItem {
+  Id: number;
+  Title: string;
+  EventDate: Date;
+  ImageURL: string;
+  EventLink: string;
+}
+
 
 
 export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqMainBannerNewsWebPartProps> {
   private slides: ISlideItem[] = [];
   private newsItems: INewsItem[] = [];
+  private eventItems: IEventItem[] = [];
   private currentSlideIndex: number = 0;
   private slideInterval: number = 2000;
   private intervalId: number = 0;
@@ -71,6 +82,25 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
     }
   }
 
+
+  private _loadCustomScripts(): void {
+    const scripts = [
+      "/Style%20Library/js/jquery.js",
+      //"/Style%20Library/js/bootstrap.min.js",
+      "/Style%20Library/js/jquery.fancybox.js",
+      "/Style%20Library/js/jquery-ui.js",
+      "/Style%20Library/js/owl.js",
+      // "/Style%20Library/js/mixitup.js",
+      // "/Style%20Library/js/wow.js",
+      // "/Style%20Library/js/appear.js",
+      "/Style%20Library/js/eventscript.js"
+    ];
+
+    scripts.forEach(script => {
+      SPComponentLoader.loadScript(this.context.pageContext.web.absoluteUrl + script);
+    });
+  }
+
   public render(): void {
     if (this.slides.length === 0) return;
 
@@ -100,7 +130,8 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
           <h2>Up Coming Events</h2>
           <div class="separator"></div>
         </div>
-        <div id="news-carousel" class="three-item-carousel owl-carousel owl-theme"></div>
+        <div id="news-carousel" class="three-item-carousel owl-carousel owl-theme">
+        </div>
       </div>
     </section>
     `;
@@ -109,55 +140,74 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
     this.startSlideshow();
 
 
-    this.renderNews();
-  }
-
-  private async renderNews(){
-
-
-
-    await this._loadNewsItems();
-    this._renderNewsItems();
-
-
+    this.renderEventNews();
 
   }
 
+  private async renderEventNews(){
 
-  private async _loadNewsItems(): Promise<void> {
+
+
+    await this._loadEventItems();
+
+
+
+
+  }
+
+  private async _loadEventItems(): Promise<void> {
     try {
       const response: SPHttpClientResponse = await this.context.spHttpClient.get(
-        `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${this.properties.listName}')/items?$select=Id,Title,ImageURL,Caption`,
+        `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${this.properties.eventList}')/items?$select=Id,Title,EventDate,EventLink`,
         SPHttpClient.configurations.v1
       );
 
       if (!response.ok) {
+
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+
+
+
       const data = await response.json();
-      this.newsItems = data.value;
+
+      this.eventItems = data.value.map((item: any) => ({
+        Id: item.Id,
+        Title: item.Title,
+        EventDate: new Date(item.EventDate),
+       // ImageURL: item.ImageURL,
+       // EventLink: item.EventLink
+      }));
+
+      this._renderEventItems();
+
     } catch (error) {
       console.error('Error loading news items:', error);
       this.domElement.innerHTML = `Error loading news items. Please check the list name and try again.`;
     }
+
   }
 
-  private _renderNewsItems(): void {
+  private _renderEventItems(): void {
+
     const newsCarousel = this.domElement.querySelector("#news-carousel");
     let html = '';
 
-    this.newsItems.forEach(item => {
+    this.eventItems.forEach(item => {
+      const day = item.EventDate.getDate();
+      const month = item.EventDate.toLocaleString('default', { month: 'short' });
+
       html += `
         <div class="news-block">
           <div class="inner-box">
             <div class="eventdte">
-              <h3>${new Date().getDate()}</h3>
-              <h5>${new Date().toLocaleString('default', { month: 'short' })}</h5>
+              <h3>${day}</h3>
+              <h5>${month}</h5>
             </div>
             <div class="eventdtls">
-              <h2><a href="blog-detail.html">${item.Title}</a></h2>
-              <div class="post-date"><span><img src="images/icons/calendar.svg" /> ${item.Caption}</span> <span><img src="images/icons/calendar.svg" /> ${item.Caption}</span></div>
+              <h2><a href="${item.EventLink}">${item.Title}</a></h2>
+              <div class="post-date"><span><img src="/Style%20Library/images/icons/calendar.svg" /> ${item.EventDate.toDateString()}</span></div>
             </div>
           </div>
         </div>`;
@@ -166,6 +216,10 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
     if (newsCarousel) {
       newsCarousel.innerHTML = html;
     }
+
+
+
+
   }
 
 
@@ -245,6 +299,9 @@ Array.prototype.slice.call(dots).forEach((dot) => {
                 }),
                 PropertyPaneTextField('newsList', {
                   label: "News List Name"
+                }),
+                PropertyPaneTextField('eventList', {
+                  label: "event List Name"
                 }),
                 PropertyPaneSlider('slideInterval', {
                   label: "Slide Interval (seconds)",
