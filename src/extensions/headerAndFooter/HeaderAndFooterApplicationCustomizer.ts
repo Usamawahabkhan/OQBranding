@@ -50,7 +50,7 @@ export default class HeaderAndFooterApplicationCustomizer
     SPComponentLoader.loadCss(this.context.pageContext.web.absoluteUrl + "/Style Library/css/responsive.css");
 
     Dialog.alert(`Hello from ${strings.Title}:\n\n${message}`);
-    alert('dfaadfafa')
+
     this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceHolders);
 
     //this._loadHeaderHtmlContent();
