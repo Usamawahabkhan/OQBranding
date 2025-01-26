@@ -1,8 +1,6 @@
 	//Gallery Filters
 	if($('.filter-list').length){
 		$('.filter-list').mixItUp({});
-
-
 	}
 
 
@@ -12,3 +10,9 @@
 			$('.preloader').delay(200).fadeOut(500);
 		}
 	}
+
+
+
+	handlePreloader();
+
+
