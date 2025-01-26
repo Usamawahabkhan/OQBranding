@@ -27,6 +27,7 @@ interface ISlideItem {
   Title: string;
   ImageURL: { Url: string };
   Caption: string;
+  LinkURLText: string;
 }
 export interface INewsItem {
   Id: number;
@@ -81,7 +82,7 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
 
     try {
       const response: SPHttpClientResponse = await this.context.spHttpClient.get(
-        `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${this.properties.listName}')/items?$select=Id,Title,ImageURL,Caption`,
+        `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${this.properties.listName}')/items?$select=Id,Title,ImageURL,Caption,LinkURLText`,
         SPHttpClient.configurations.v1
       );
 
@@ -130,7 +131,14 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
             <div class="${styles.slide} ${index === this.currentSlideIndex ? styles.active : ''}">
               <div class="${styles.numbertext}">${index + 1} / ${this.slides.length}</div>
               <img src="${slide.ImageURL.Url}" alt="${slide.Title}" style="width:100%">
-              <div class="${styles.caption}">${slide.Caption}</div>
+
+              <div class="${styles.title}">${slide.Title}
+
+                  <div class="${styles.caption}">${slide.Caption}</div>
+                  <div class="${styles.readMore}"><a href="${slide.LinkURLText}">Read More</a></div>
+              </div>
+
+
             </div>
           `).join('')}
 
@@ -145,7 +153,7 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
       <section class="news-section eventsblocks">
       <div class="auto-container">
         <div class="sec-title">
-          <h2>Up Coming Events</h2>
+          <h2  class="news-headline">Up Coming Events</h2>
           <div class="separator"></div>
         </div>
         <div id="news-carousel" class="three-item-carousel owl-carousel owl-theme">
@@ -216,8 +224,8 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
         Id: item.Id,
         Title: item.Title,
         EventDate: new Date(item.EventDate),
-       // ImageURL: item.ImageURL,
-       // EventLink: item.EventLink
+
+        EventLink: item.EventLink.Url
       }));
 
       this._renderEventItems();
@@ -330,7 +338,7 @@ private _renderMozyaItems(): void {
               <img src="${item.ImageURL}" alt="${item.Title}" />
             </div>
             <div class="lower-box">
-              <h3><a href="${item.EventLink}">${item.Title}</a></h3>
+              <h3><a href="/Lists/Mozya/DispForm.aspx?ID=${item.Id}&e=TcQxCy">${item.Title}</a></h3>
             </div>
           </div>
         </div>`;
@@ -343,7 +351,7 @@ private _renderMozyaItems(): void {
     <section class="project-section ycom" style="background-color: #fff;">
       <div class="auto-container">
         <div class="sec-title centered">
-          <h2>Ycom</h2>
+          <h2>MAZAYACOM</h2>
           <div class="separator"></div>
         </div>
         <div class="tabs">

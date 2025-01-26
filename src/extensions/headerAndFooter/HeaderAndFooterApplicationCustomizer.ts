@@ -53,7 +53,9 @@ export default class HeaderAndFooterApplicationCustomizer
 
     this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceHolders);
 
+
     //this._loadHeaderHtmlContent();
+
     return Promise.resolve();
   }
 
@@ -121,49 +123,56 @@ private _renderPlaceHolders(): void {
     }
   }
 
-  // Handling the bottom placeholder
-  if (!this._bottomPlaceholder) {
-    this._bottomPlaceholder = this.context.placeholderProvider.tryCreateContent(
-      PlaceholderName.Bottom,
-      { onDispose: this._onDispose }
-    );
+  // // Handling the bottom placeholder
+  // if (!this._bottomPlaceholder) {
+  //   this._bottomPlaceholder = this.context.placeholderProvider.tryCreateContent(
+  //     PlaceholderName.Bottom,
+  //     { onDispose: this._onDispose }
+  //   );
 
-    // The extension should not assume that the expected placeholder is available.
-    if (!this._bottomPlaceholder) {
-      console.error("The expected placeholder (Bottom) was not found.");
-      return;
-    }
+  //   // The extension should not assume that the expected placeholder is available.
+  //   if (!this._bottomPlaceholder) {
+  //     console.error("The expected placeholder (Bottom) was not found.");
+  //     return;
+  //   }
 
-    if (this.properties) {
-      let bottomString: string = this.properties.Bottom;
-      if (!bottomString) {
-        bottomString = "(Bottom property was not defined.)";
-      }
+  //   if (this.properties) {
+  //     let bottomString: string = this.properties.Bottom;
+  //     if (!bottomString) {
+  //       bottomString = "(Bottom property was not defined.)";
+  //     }
 
-      if (this._bottomPlaceholder.domElement) {
-
-
-
-
-
-        const htmlUrl = this.context.pageContext.web.absoluteUrl + '/Style Library/footer.html';
-
-        fetch(htmlUrl)
-          .then(response => response.text())
-          .then(html => {
-            this._bottomPlaceholder.domElement.innerHTML = html;
-          })
-          .catch(error => console.error('Error loading HTML:', error));
+  //     if (this._bottomPlaceholder.domElement) {
 
 
 
 
 
+  //       const htmlUrl = this.context.pageContext.web.absoluteUrl + '/Style Library/footer.html';
 
-      }
-    }
-  }
+  //       fetch(htmlUrl)
+  //         .then(response => response.text())
+  //         .then(html => {
+  //           this._bottomPlaceholder.domElement.innerHTML = html;
+  //         })
+  //         .catch(error => console.error('Error loading HTML:', error));
+
+
+
+
+
+
+  //     }
+  //   }
+  // }
+
+
 }
+
+
+
+
+
 
 
 private _onDispose(): void {

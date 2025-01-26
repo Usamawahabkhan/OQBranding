@@ -11,7 +11,7 @@ div[class^='pageContainer_'] {
 
 .ms-Grid-row:first-child {
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .CanvasZone {
   height: 100%;
@@ -36,7 +36,7 @@ div[class^='pageContainer_'] {
 
   padding: 0 !important;
   margin: 0 !important;
-  background-color: brown !important;
+  background-color: #1e4e52 !important;
 
 
 
@@ -60,5 +60,18 @@ position: absolute !important;
 
 /* customStyles.css */
 [data-reactroot] {
-  overflow: hidden; /* Remove scroll bar */
+  /* overflow: hidden;  */
 }
+
+
+.ms-searchux-searchbox{
+  display: none !important;
+}
+
+.commandBarWrapper{
+
+  display: none !important;
+}
+
+
+

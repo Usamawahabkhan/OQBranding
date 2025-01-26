@@ -3,11 +3,12 @@
 
 .imageSlideshow {
   position: relative;
-  max-width: auto ;
+  max-width: auto;
   margin: auto;
 
   .slideshowContainer {
     position: relative;
+
   }
 
   .slide {
@@ -21,7 +22,7 @@
 
     img {
       width: 100%;
-      height: auto;
+      height: 80vh;
     }
   }
 
@@ -36,14 +37,42 @@
   }
 
   .caption {
-    color: #f2f2f2;
+    color: #4f4f4fde;
     font-size: 15px;
+    padding-top: 10px;
+    bottom: 8px;
+    width: 400px;
+    /* Set the width to 30% of the total width */
+    /* Align to the left with some padding */
+    text-align: left;
+    /* Align text to the left */
+    white-space: normal;
+    /* Ensure text wraps to multiple lines */
+    word-wrap: break-word;
+    /* Break long words to wrap them to the next line */
+
+  }
+
+  .title {
+    color: #f2f2f2;
+    font-size: 44px;
     padding: 8px 12px;
     position: absolute;
-    bottom: 8px;
-    width: 100%;
-    text-align: center;
+    Top: 25%;
+    /* Adjust as needed */
+    left: 100px;
+    /* Align to the left with some padding */
+    text-align: left;
     background: rgba(0, 0, 0, 0.5);
+    width: auto; // calc(100% - 24px); /* Adjust width to account for padding */
+  }
+
+  .readMore {
+
+    text-align: right;
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 15px;
   }
 
   .prev,
@@ -88,7 +117,8 @@
     display: inline-block;
     transition: background-color 0.6s ease;
 
-    &:hover, &.activeDot {
+    &:hover,
+    &.activeDot {
       background-color: #717171;
     }
   }
@@ -112,7 +142,9 @@
   from {
     opacity: 0.4;
   }
+
   to {
     opacity: 1;
+    background-color: seagreen;
   }
 }
