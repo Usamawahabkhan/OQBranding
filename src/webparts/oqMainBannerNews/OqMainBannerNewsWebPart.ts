@@ -60,6 +60,45 @@ export interface IMozyaItem {
 
 
 
+/**
+ * OqMainBannerNewsWebPart class extends BaseClientSideWebPart to create a custom web part
+ * that displays a slideshow of images, upcoming events, news items, and Mozya items.
+ *
+ * @extends {BaseClientSideWebPart<IOqMainBannerNewsWebPartProps>}
+ *
+ * @property {ISlideItem[]} slides - Array to store slide items.
+ * @property {IMozyaItem[]} mozyaItems - Array to store Mozya items.
+ * @property {INewsItem[]} newsItems - Array to store news items.
+ * @property {IEventItem[]} eventItems - Array to store event items.
+ * @property {number} currentSlideIndex - Index of the current slide being displayed.
+ * @property {number} slideInterval - Interval time for the slideshow in milliseconds.
+ * @property {number} intervalId - ID of the interval timer for the slideshow.
+ *
+ * @method protected async onInit() - Initializes the web part and loads slides.
+ * @method private async loadSlides() - Loads slides from the specified SharePoint list.
+ * @method private _loadCustomScripts() - Loads custom scripts required for the web part.
+ * @method public async render() - Renders the web part content.
+ * @method private async _callMethodsInOrder() - Calls methods in a specific order.
+ * @method private async renderEventNews() - Renders event news items.
+ * @method private async _loadEventItems() - Loads event items from the specified SharePoint list.
+ * @method private _renderEventItems() - Renders event items.
+ * @method private _renderAppIcon() - Renders the app icon section.
+ * @method private async _loadMozyaItems() - Loads Mozya items from the specified SharePoint list.
+ * @method private _renderMozyaItems() - Renders Mozya items.
+ * @method private _getUniqueCategories(items: IMozyaItem[]) - Gets unique categories from Mozya items.
+ * @method private _initializeTabs() - Initializes tab functionality for Mozya items.
+ * @method private async _loadNewsItems() - Loads news items from the specified SharePoint list.
+ * @method private _renderNewsItems() - Renders news items.
+ * @method private _getUniqueNewsCategories(items: INewsItem[]) - Gets unique categories from news items.
+ * @method private setEventListeners() - Sets event listeners for slideshow navigation.
+ * @method private calltest(dd: number) - Test method for event handling.
+ * @method private moveSlide(direction: number) - Moves the slideshow to the next or previous slide.
+ * @method private showSlide(index: number) - Displays the slide at the specified index.
+ * @method private startSlideshow() - Starts the slideshow.
+ * @method private stopSlideshow() - Stops the slideshow.
+ * @method protected onDispose() - Cleans up resources when the web part is disposed.
+ * @method protected getPropertyPaneConfiguration() - Returns the property pane configuration for the web part.
+ */
 export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqMainBannerNewsWebPartProps> {
   private slides: ISlideItem[] = [];
   private mozyaItems: IMozyaItem[] = [];
@@ -112,7 +151,8 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
       // "/Style%20Library/js/appear.js",
       "/Style%20Library/js/eventscript.js",
       "/Style%20Library/js/mozyascript.js",
-      "/Style%20Library/js/Newsscript.js"
+      "/Style%20Library/js/Newsscript.js",
+      "/Style%20Library/js/preloader.js",
     ];
 
     scripts.forEach(script => {
@@ -120,7 +160,7 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
     });
   }
 
-  public render(): void {
+  public async render(): Promise<void> {
     if (this.slides.length === 0) return;
 
 
@@ -142,8 +182,8 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
             </div>
           `).join('')}
 
-          <button class="${styles.prev}" aria-label="Previous slide">❮</button>
-          <button class="${styles.next}" aria-label="Next slide">❯</button>
+          <button class="${styles.prev} btnslidePrevious"  aria-label="Previous slide">❮</button>
+          <button class="${styles.next}"id="btnslideNext" aria-label="Next slide">❯</button>
         </div>
 
 
@@ -162,15 +202,15 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
     </section>
     `;
 
-    //this.setEventListeners();
+    this.setEventListeners();
     this.startSlideshow();
 
 
-    this.renderEventNews();
+   await this.renderEventNews();
 
-    this._renderAppIcon();
-    this._loadMozyaItems();
-    this._loadNewsItems();
+   await this._renderAppIcon();
+   await this._loadMozyaItems();
+   await this._loadNewsItems();
 
 
 
@@ -520,13 +560,31 @@ private _getUniqueNewsCategories(items: INewsItem[]): string[] {
   //slider
 
   private setEventListeners(): void {
-    const prevButton = this.domElement.querySelector("${styles.prev}");
-    const nextButton = this.domElement.querySelector('${styles.next}');
-
-    prevButton.addEventListener('click', () => this.moveSlide(-1));
-    nextButton.addEventListener('click', () => this.moveSlide(1));
 
 
+    const prevButton = this.domElement.querySelector(".btnslidePrevious");
+    const nextButton = this.domElement.querySelector(`${styles.next}`);
+    console.log(prevButton, nextButton); // Log elements to confirm they're found
+
+    if (prevButton) {
+      prevButton.addEventListener('click', () => this.calltest(-1));
+    } else {
+      console.error("Previous button not found");
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', () => this.moveSlide(1));
+    } else {
+      console.error("Next button not found");
+    }
+
+
+
+}
+
+private calltest(dd :number):void{
+
+ alert("test");
 }
 
 
@@ -535,6 +593,7 @@ private _getUniqueNewsCategories(items: INewsItem[]): string[] {
     if (newIndex >= this.slides.length) newIndex = 0;
     if (newIndex < 0) newIndex = this.slides.length - 1;
     this.showSlide(newIndex);
+
   }
 
   private showSlide(index: number): void {

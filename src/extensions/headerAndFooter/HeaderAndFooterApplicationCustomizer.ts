@@ -166,13 +166,22 @@ private _renderPlaceHolders(): void {
   //   }
   // }
 
+ //this._loadCustomScripts();
 
 }
 
 
 
 
+private _loadCustomScripts(): void {
+  const scripts = [
 
+  ];
+
+  scripts.forEach(script => {
+    SPComponentLoader.loadScript(this.context.pageContext.web.absoluteUrl + script);
+  });
+}
 
 
 private _onDispose(): void {
