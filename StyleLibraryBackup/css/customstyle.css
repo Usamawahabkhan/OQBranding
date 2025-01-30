@@ -1,0 +1,77 @@
+nav[role='navigation'] {
+  display: none !important;
+}
+div[class^='pageContainer_'] {
+  left: 0 !important;
+}
+
+.ms-compositeHeader {
+  display: none !important;
+}
+
+.ms-Grid-row:first-child {
+  height: 100vh;
+  /* overflow: hidden; */
+}
+.CanvasZone {
+  height: 100%;
+  overflow: hidden;
+
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+}
+
+.SPCanvas-canvas{
+
+
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+
+}
+
+.ControlZone{
+
+
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #1e4e52 !important;
+
+
+
+
+}
+
+.CanvasSection  {
+  padding: 0 !important;
+  margin: 0px !important;
+
+}
+
+
+.main-footer{
+position: absolute !important;
+  width: 100%;
+}
+
+
+
+
+/* customStyles.css */
+[data-reactroot] {
+  /* overflow: hidden;  */
+}
+
+
+.ms-searchux-searchbox{
+  display: none !important;
+}
+
+.commandBarWrapper{
+
+  display: none !important;
+}
+
+
+
