@@ -1,0 +1,8 @@
+<App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
+     Name="OQ Branding Solution"
+     ProductID="{a89ad786-1b44-447d-aff1-431ee6cfc4c0}"
+     Version="1.2.0.0">
+   <AppPermissionRequests>
+       <AppPermissionRequest Scope="http://sharepoint/content/sitecollection" Right="Read" />
+   </AppPermissionRequests>
+</App>

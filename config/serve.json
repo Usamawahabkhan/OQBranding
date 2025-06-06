@@ -1,15 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
-  "port": 4321,
+  "port": 8585,
   "https": true,
-  "initialPage": "http://win-hvbmj3otuqb/SitePages/Home.aspx",
+  "initialPage": "https://tawasulsc.oq.com/Sites/uat/SitePages/Home.aspx",
   "api": {
-    "port": 5432,
+    "port": 3948,
     "entryPath": "node_modules/@microsoft/sp-webpart-workbench/lib/api/"
   },
   "serveConfigurations": {
     "default": {
-      "pageUrl": "http://win-hvbmj3otuqb/SitePages/Home.aspx",
+      "pageUrl": "https://tawasulsc.oq.com/Sites/uat/SitePages/Home.aspx",
       "customActions": {
         "09ef70c1-548d-4471-82bd-2ddf056e2e6a": {
           "location": "ClientSideExtension.ApplicationCustomizer",
@@ -20,7 +20,7 @@
       }
     },
     "headerAndFooter": {
-      "pageUrl": "http://win-hvbmj3otuqb/SitePages/Home.aspx",
+      "pageUrl": "https://tawasulsc.oq.com/Sites/uat/SitePages/Home.aspx",
       "customActions": {
         "09ef70c1-548d-4471-82bd-2ddf056e2e6a": {
           "location": "ClientSideExtension.ApplicationCustomizer",

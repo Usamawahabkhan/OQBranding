@@ -37,11 +37,11 @@
   }
 
   .caption {
-    color: #4f4f4fde;
-    font-size: 15px;
+    color:  #b5b0b0de;
+    font-size: 17px;
     padding-top: 10px;
     bottom: 8px;
-    width: 400px;
+    width: auto;
     /* Set the width to 30% of the total width */
     /* Align to the left with some padding */
     text-align: left;
@@ -55,7 +55,7 @@
 
   .title {
     color: #f2f2f2;
-    font-size: 44px;
+    font-size: 35px;
     padding: 8px 12px;
     position: absolute;
     Top: 25%;
@@ -65,6 +65,7 @@
     text-align: left;
     background: rgba(0, 0, 0, 0.5);
     width: auto; // calc(100% - 24px); /* Adjust width to account for padding */
+    line-height: 1.5;
   }
 
   .readMore {

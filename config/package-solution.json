@@ -3,15 +3,8 @@
   "solution": {
     "name": "oq-main-client-side-solution",
     "id": "a89ad786-1b44-447d-aff1-431ee6cfc4c0",
-    "version": "1.0.0.0",
+    "version": "1.0.0.3",
     "includeClientSideAssets": true,
-"webApiPermissionRequests": [
-      {
-        "resource": "Microsoft.SharePoint",
-        "scope": "Lists.Read"
-      }
-    ],
-    "skipFeatureDeployment": true,
     "features": [
       {
         "title": "Application Extension - Deployment of custom action.",

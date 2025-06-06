@@ -17,6 +17,7 @@ export interface IOqMainBannerNewsWebPartProps {
   description: string;
   listName: string;
   slideInterval: number;
+  sideCapitonBackgroundColor:string;
   newsList: string;
   eventList:string;
   mozyaList:string
@@ -107,6 +108,7 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
   private currentSlideIndex: number = 0;
   private slideInterval: number = 2000;
   private intervalId: number = 0;
+  private sideCapitonBackgroundColor ='rgba(0,0,0,.5)'
 
   protected async onInit(): Promise<void> {
     await super.onInit();
@@ -168,13 +170,13 @@ export default class OqMainBannerNewsWebPart  extends BaseClientSideWebPart<IOqM
       <div class="${styles.imageSlideshow}">
         <div class="${styles.slideshowContainer}">
           ${this.slides.map((slide, index) => `
-            <div class="${styles.slide} ${index === this.currentSlideIndex ? styles.active : ''}">
+            <div  class="${styles.slide} ${index === this.currentSlideIndex ? styles.active : ''}">
               <div class="${styles.numbertext}">${index + 1} / ${this.slides.length}</div>
               <img src="${slide.ImageURL.Url}" alt="${slide.Title}" style="width:100%">
 
-              <div class="${styles.title}">${slide.Title}
+              <div style="background:${this.properties.sideCapitonBackgroundColor}" class="${styles.title}">${slide.Title}
 
-                  <div class="${styles.caption}">${slide.Caption}</div>
+                  <div class="${styles.caption}" >${slide.Caption}</div>
                   <div class="${styles.readMore}"><a href="${slide.LinkURLText}">Read More</a></div>
               </div>
 
@@ -662,6 +664,12 @@ Array.prototype.slice.call(dots).forEach((dot) => {
                 PropertyPaneTextField('eventList', {
                   label: "event List Name"
                 }),
+                PropertyPaneTextField('sideCapitonBackgroundColor', {
+                  label: "Slide Capitons Background Color"
+                }),
+
+                
+
                 PropertyPaneSlider('slideInterval', {
                   label: "Slide Interval (seconds)",
                   min: 1,
