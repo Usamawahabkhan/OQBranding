@@ -1,3 +1,6 @@
+
+$(".commandBarWrapper").css("display", "block");
+-------------------
 .dealContainer {
   background: #fff;
   padding: 20px;
