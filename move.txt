@@ -1,0 +1,27 @@
+// Create the button element
+const newButton = document.createElement("button");
+newButton.innerText = "Show Command Bar";
+newButton.className = "o365button o365cs-contextMenuItem ms-fcl-b ms-fcl-b-h ms-fcl-b-f";
+newButton.style.padding = "5px 10px";
+newButton.style.margin = "5px";
+newButton.style.cursor = "pointer";
+
+// Add click event to the button
+newButton.addEventListener("click", function () {
+    const commandBar = document.querySelector(".commandBarWrapper");
+    if (commandBar) {
+        commandBar.setAttribute("style", "display: block !important;");
+        console.log("Command Bar is now visible.");
+    } else {
+        console.warn("Command Bar not found.");
+    }
+});
+
+// Find the target div and append the button
+const targetDiv = document.querySelector(".o365cs-nav-contextMenu");
+if (targetDiv) {
+    targetDiv.appendChild(newButton);
+    console.log("Button added successfully.");
+} else {
+    console.error("Target div not found.");
+}
