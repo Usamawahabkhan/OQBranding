@@ -1,4 +1,47 @@
 
+
+
+
+
+v  const day = item.ExpireDate.getDate();
+        const month = item.ExpireDate.toLocaleString('default', { month: 'short' });
+
+
+        contentHtml += `
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+          <div class="inner-box">
+            <div class="image">
+              <img src="${item.ImageURL}" alt="${item.Title}" />
+            </div>
+            <div class="lower-box">
+            <div class="eventdte">
+
+                <h1 style="
+    padding-top: 10px;
+    font-size: 40px;
+    line-height: 0.9;
+    color: #00adbb;
+    font-weight: bold;
+"> ${day}  <span style="
+
+    line-height: 0.9;
+    color:rgb(0, 0, 0);
+    font-size: 20px;
+">${month}</span></h5>
+              </div>
+              <h3><a href="./Mozya.aspx?MozyaID=${item.Id}&e=TcQxCy">${item.Title}</a></h3>
+            </div>
+          </div>
+        </div>`;
+      });
+
+
+
+
+
+
+
+
 $(".commandBarWrapper").css("display", "block");
 -------------------
 .dealContainer {
