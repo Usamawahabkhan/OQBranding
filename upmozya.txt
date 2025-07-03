@@ -239,6 +239,53 @@ export default class OqMozyaDisplayWebPart extends BaseClientSideWebPart<IOqMozy
 
 
 
+--- mazya update --
+
+  private async _loadMozyaItems(): Promise<void> {
+    try {
+
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+      // Convert to ISO strings (SharePoint expects UTC format)
+      const startISO = startOfMonth.toISOString();
+      const endISO = endOfMonth.toISOString();
+
+
+
+      const filter = `$filter=ExpireDate ge datetime'${startISO}' and ExpireDate le datetime'${endISO}'`;
+      const select = `$select=Id,Title,ExpireDate,EventLink,Category,ImageURL`;
+
+      const response: SPHttpClientResponse = await this.context.spHttpClient.get(
+        `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${this.properties.mozyaList}')/items?${select}&${filter}`,
+        SPHttpClient.configurations.v1
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      this.mozyaItems = data.value.map((item: any) => ({
+        Id: item.Id,
+        Title: item.Title,
+        ExpireDate: new Date(item.ExpireDate),
+        ImageURL: item.ImageURL.Url,
+        EventLink: item.EventLink,
+        Category: item.Category // Corrected to match the property
+      }));
+
+      this._renderMozyaItems();
+
+    } catch (error) {
+      console.error('Error loading news items:', error);
+      this.domElement.innerHTML = `loadding item Error loading news items. Please check the list name and try again.`;
+    }
+  }
+
+
 
 
 
