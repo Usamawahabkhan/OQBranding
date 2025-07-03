@@ -288,6 +288,53 @@ export default class OqMozyaDisplayWebPart extends BaseClientSideWebPart<IOqMozy
 
 
 
+  private async _loadEventItems(): Promise<void> {
+    try {
+
+
+
+
+          // Get current date in ISO format
+    const today = new Date();
+    const todayISO = today.toISOString();
+
+    // Prepare $select and $filter query parameters
+    const select = `$select=Id,Title,EventDate,EventLink`;
+    const filter = `$filter=EventDate ge datetime'${todayISO}'`;
+
+    // Fetch only future events
+    const response: SPHttpClientResponse = await this.context.spHttpClient.get(
+      `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${this.properties.eventList}')/items?${select}&${filter}`,
+      SPHttpClient.configurations.v1
+    );
+
+      if (!response.ok) {
+
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+
+
+
+      const data = await response.json();
+
+      this.eventItems = data.value.map((item: any) => ({
+        Id: item.Id,
+        Title: item.Title,
+        EventDate: new Date(item.EventDate),
+
+        EventLink: item.EventLink.Url
+      }));
+
+      this._renderEventItems();
+
+    } catch (error) {
+      console.error('Error loading news items:', error);
+      this.domElement.innerHTML = `Error loading news items. Please check the list name and try again.`;
+    }
+
+  }
+
 
 .news-section .owl-nav .owl-next{
 	position:relative;
