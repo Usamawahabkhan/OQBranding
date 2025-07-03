@@ -236,3 +236,24 @@ export default class OqMozyaDisplayWebPart extends BaseClientSideWebPart<IOqMozy
   }
 
 }
+
+
+
+
+
+
+.news-section .owl-nav .owl-next{
+	position:relative;
+	width:35px;
+	height:35px;
+	display:inline-block;
+	background:url(../images/icons/left-arrow.png) no-repeat;
+	background-size: contain;
+	transition:all 500ms ease;
+	-moz-transition:all 500ms ease;
+	-webkit-transition:all 500ms ease;
+	-ms-transition:all 500ms ease;
+	-o-transition:all 500ms ease;
+	  transform: rotate(180deg); /* This rotates the element */
+	
+}
